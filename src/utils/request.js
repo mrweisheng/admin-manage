@@ -3,6 +3,7 @@ import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
 import router from '@/router'
 
+// 创建 axios 实例
 const request = axios.create({
   baseURL: 'https://task-server-zyir.onrender.com',
   // baseURL: 'http://localhost:3000',

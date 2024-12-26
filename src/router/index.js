@@ -4,18 +4,18 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 const routes = [
   {
-    path: '/admin/login',
+    path: '/login',
     name: 'Login',
     component: () => import('@/views/LoginView.vue'),
     meta: { requiresAuth: false }
   },
   {
-    path: '/admin',
+    path: '/',
     component: DefaultLayout,
     children: [
       {
         path: '',
-        redirect: '/admin/dashboard'
+        redirect: 'dashboard'
       },
       {
         path: 'dashboard',
@@ -49,7 +49,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/admin/'),
   routes
 })
 
@@ -58,7 +58,7 @@ router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   
   if (to.meta.requiresAuth && !userStore.isLoggedIn) {
-    next('/admin/login')
+    next('/login')
   } else {
     next()
   }
