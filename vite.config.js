@@ -21,6 +21,20 @@ export default defineConfig({
         drop_console: true,
         drop_debugger: true
       }
+    },
+    rollupOptions: {
+      output: {
+        // 确保生成的资源使用正确的 MIME 类型
+        assetFileNames: (assetInfo) => {
+          let extType = assetInfo.name.split('.').at(1);
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
+            extType = 'img'
+          }
+          return `assets/${extType}/[name]-[hash][extname]`
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+      }
     }
   },
   server: {
