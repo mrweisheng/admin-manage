@@ -6,7 +6,8 @@ import router from '@/router'
 // 创建 axios 实例
 const request = axios.create({
   // baseURL: 'https://task-server-zyir.onrender.com',
-  baseURL: 'http://localhost:3000',
+  // baseURL: 'http://localhost:3000',
+  baseURL: 'http://104.37.187.30:5000',
   timeout: 5000
 })
 

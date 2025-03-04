@@ -45,11 +45,27 @@
         <el-table-column prop="content" label="任务内容" show-overflow-tooltip />
         <el-table-column label="联系方式" width="150">
           <template #default="{ row }">
-            <div v-for="number in row.numbers" :key="number">
-              {{ number }}
+            <el-tooltip
+              v-if="row.numbers?.length > 3"
+              effect="dark"
+              placement="top"
+              :content="row.numbers.join('\n')"
+            >
+              <div>
+                <div v-for="(number, index) in row.numbers.slice(0, 3)" :key="number">
+                  {{ number }}
+                </div>
+                <div v-if="row.numbers.length > 3">...</div>
+              </div>
+            </el-tooltip>
+            <div v-else>
+              <div v-for="number in row.numbers" :key="number">
+                {{ number }}
+              </div>
             </div>
           </template>
         </el-table-column>
+        <el-table-column prop="numbers.length" label="号码数量" width="100" align="center" />
         <el-table-column label="媒体文件" width="120">
           <template #default="{ row }">
             <div v-if="row.media_urls?.length" class="media-list">
@@ -310,4 +326,4 @@ fetchTaskList()
   background-color: #000;
   border-radius: 4px;
 }
-</style> 
+</style>

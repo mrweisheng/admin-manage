@@ -36,21 +36,69 @@
     <!-- 统计信息 -->
     <el-row :gutter="20" class="stats-row">
       <el-col :span="8">
-        <el-card shadow="hover">
-          <template #header>总消息数</template>
-          <div class="stats-value">{{ stats.total_messages }}</div>
+        <el-card shadow="hover" class="stats-card">
+          <div class="stats-content">
+            <div class="stats-icon">
+              <el-icon size="40"><Message /></el-icon>
+            </div>
+            <div class="stats-info">
+              <div class="stats-title">总消息数</div>
+              <div class="stats-value">{{ stats.total_messages }}</div>
+              <div class="stats-trend">
+                <el-icon :color="stats.message_trend >= 0 ? '#67c23a' : '#f56c6c'">
+                  <CaretTop v-if="stats.message_trend >= 0" />
+                  <CaretBottom v-else />
+                </el-icon>
+                <span :style="{ color: stats.message_trend >= 0 ? '#67c23a' : '#f56c6c' }">
+                  {{ Math.abs(stats.message_trend) }}%
+                </span>
+              </div>
+            </div>
+          </div>
         </el-card>
       </el-col>
       <el-col :span="8">
-        <el-card shadow="hover">
-          <template #header>总积分消耗</template>
-          <div class="stats-value">{{ stats.total_points }}</div>
+        <el-card shadow="hover" class="stats-card">
+          <div class="stats-content">
+            <div class="stats-icon">
+              <el-icon size="40"><Coin /></el-icon>
+            </div>
+            <div class="stats-info">
+              <div class="stats-title">总积分消耗</div>
+              <div class="stats-value">{{ stats.total_points }}</div>
+              <div class="stats-trend">
+                <el-icon :color="stats.points_trend >= 0 ? '#67c23a' : '#f56c6c'">
+                  <CaretTop v-if="stats.points_trend >= 0" />
+                  <CaretBottom v-else />
+                </el-icon>
+                <span :style="{ color: stats.points_trend >= 0 ? '#67c23a' : '#f56c6c' }">
+                  {{ Math.abs(stats.points_trend) }}%
+                </span>
+              </div>
+            </div>
+          </div>
         </el-card>
       </el-col>
       <el-col :span="8">
-        <el-card shadow="hover">
-          <template #header>总订单数</template>
-          <div class="stats-value">{{ stats.total_orders }}</div>
+        <el-card shadow="hover" class="stats-card">
+          <div class="stats-content">
+            <div class="stats-icon">
+              <el-icon size="40"><Document /></el-icon>
+            </div>
+            <div class="stats-info">
+              <div class="stats-title">总订单数</div>
+              <div class="stats-value">{{ stats.total_orders }}</div>
+              <div class="stats-trend">
+                <el-icon :color="stats.orders_trend >= 0 ? '#67c23a' : '#f56c6c'">
+                  <CaretTop v-if="stats.orders_trend >= 0" />
+                  <CaretBottom v-else />
+                </el-icon>
+                <span :style="{ color: stats.orders_trend >= 0 ? '#67c23a' : '#f56c6c' }">
+                  {{ Math.abs(stats.orders_trend) }}%
+                </span>
+              </div>
+            </div>
+          </div>
         </el-card>
       </el-col>
     </el-row>
@@ -177,6 +225,13 @@ import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { getOrders, getOrderDetail } from '@/api/order'
 import { getMessageTypes } from '@/api/message-type'
+import {
+  Message,
+  Coin,
+  Document,
+  CaretTop,
+  CaretBottom
+} from '@element-plus/icons-vue'
 
 const loading = ref(false)
 const orderList = ref([])
@@ -316,11 +371,54 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
-.stats-value {
-  font-size: 24px;
-  font-weight: bold;
+.stats-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stats-content {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.stats-icon {
+  margin-right: 20px;
   color: #409EFF;
-  text-align: center;
+}
+
+.stats-info {
+  flex: 1;
+}
+
+.stats-title {
+  font-size: 14px;
+  color: #909399;
+  margin-bottom: 8px;
+}
+
+.stats-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #303133;
+  margin-bottom: 8px;
+}
+
+.stats-trend {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.stats-trend .el-icon {
+  margin-right: 4px;
 }
 
 .pagination {
@@ -353,4 +451,4 @@ onMounted(() => {
   max-height: 150px;
   border-radius: 4px;
 }
-</style> 
+</style>
