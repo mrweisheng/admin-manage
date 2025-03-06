@@ -59,7 +59,7 @@ export function resetUserPassword(userId, newPassword) {
 
 export function registerUser(data) {
   return request({
-    url: '/api/user/register',
+    url: '/taskapi/user/register',
     method: 'post',
     data
   })
@@ -67,7 +67,7 @@ export function registerUser(data) {
 
 export function updateUserBalance(userId, balance) {
   return request({
-    url: `/api/user/balance`,
+    url: `/taskapi/user/balance`,
     method: 'put',
     data: { 
       userId: Number(userId),
